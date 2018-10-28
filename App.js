@@ -1,13 +1,12 @@
+import Expo from "expo";
 import React, { Component } from 'react';
 import { Container, Icon } from "native-base";
-import {SQLite} from "expo";
-import { StyleSheet, Text, View } from 'react-native';
 import {createDrawerNavigator, createStackNavigator} from 'react-navigation';
 import RechercheComponent from "./app/recherche/search.component";
 import AccueilComponent from "./app/accueil/accueil.component";
 import ParamsComponent from "./app/params/params.component";
 
-const db = SQLite.openDatabase('db.db');
+const db = Expo.SQLite.openDatabase('db.db');
 
 getNavigationOptions = (title) => {
     return {
@@ -87,6 +86,7 @@ export default class App extends Component {
 
     async componentWillMount() {
         await Expo.Font.loadAsync({
+            MaterialIcons: require("native-base/Fonts/MaterialIcons.ttf"),
             Roboto: require("native-base/Fonts/Roboto.ttf"),
             Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf"),
             Ionicons: require("native-base/Fonts/Ionicons.ttf")
@@ -96,6 +96,9 @@ export default class App extends Component {
 
     componentDidMount() {
         db.transaction(tx => {
+            // tx.executeSql(
+            //     'drop table if exists favori;'
+            // );
             tx.executeSql(
                 'create table if not exists favori (id text primary key not null, ville text, pays text, code text);'
             );

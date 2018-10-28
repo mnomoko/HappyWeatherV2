@@ -1,6 +1,10 @@
 export default class UrlBuilder {
 
     static APIKEYS = 'a9346b773b5b7b7e4519943713acfea1';
+
+    static getWeatherFromLocation = (longitude, latitude) => {
+        return UrlBuilder.getUrl(`http://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}`);
+    };
     
     static getForecastCity = (city) => {
         return UrlBuilder.getUrl(`http://api.openweathermap.org/data/2.5/weather?q=${city}`);

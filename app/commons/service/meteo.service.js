@@ -4,8 +4,6 @@ import {ToastAndroid} from "react-native";
 export default class MeteoService {
 
     static getCurrentWeatherOfToday = async (city, country) => {
-        console.log(city);
-        console.log(country);
         if(country) {
             return await fetch(UrlBuilder.getForecastCityCountry(city, country)).then(async (res) => await res.json()).catch(async (err) => await err);
         }
@@ -53,6 +51,10 @@ export default class MeteoService {
         else {
             return await fetch(UrlBuilder.getForecast15DaysCity(city)).then((res) => res.json()).catch(async (err) => await console.log(err));
         }
+    };
+
+    static getWeatherFromLocation = async (longitude, latitude) => {
+        return await fetch(UrlBuilder.getWeatherFromLocation(longitude, latitude)).then((res) => res.json()).catch(async (err) => await console.log(err));
     };
 
     static handleError = (res) => {

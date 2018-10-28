@@ -1,5 +1,5 @@
 import CountryService from "./country.service";
-import Ville from "../ville";
+import Ville from "../model/ville";
 
 let cities = require('./../cities.json');
 
