@@ -1,4 +1,4 @@
-import moment from "moment";
+import moment from 'moment/min/moment-with-locales'
 
 export default class Utils {
 
@@ -10,8 +10,7 @@ export default class Utils {
     };
 
     static getDate = (timestamp) => {
-        moment.locale("fr");
-        // moment();
+        moment.locale('fr');
         let dateFormat = 'dddd - HH';
         let time = moment(timestamp * 1000).format(dateFormat);
         return time + 'h';

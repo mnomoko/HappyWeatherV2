@@ -18,6 +18,9 @@ import Favori from '../commons/model/favori';
 import Utils from '../commons/utils/Utils';
 import SearchBarHeader from "./search-bar/search-bar-header.component";
 import {SQLite} from "expo";
+import SpinnerComponent from "../commons/component/spinner/spinner.component";
+import styles from "../commons/styles/styles";
+import ModalComponent from "../commons/component/modal/modal.component";
 
 const db = SQLite.openDatabase('db.db');
 
@@ -102,35 +105,7 @@ export default class RechercheComponent extends Component {
     isFavoriteOrMaxLength = () => {
         const { favoris, weather } = this.state;
         let result = favoris.find(fav => fav.ville === weather.ville && fav.codePays === weather.codePays);
-        return !!result || this.state.favoris.length >= 3;
-    };
-
-    renderButtons = (saved) => {
-        if(!saved) {
-            return (
-                <View style={{paddingTop: 20, flexDirection: 'row', justifyContent: 'space-between'}}>
-                    <View style={{marginRight: 5}}>{this.renderButton('Enregistrer la ville', this.enregistrerVille, this.isFavoriteOrMaxLength())}</View>
-                    <View style={{marginLeft: 5}}>{this.renderButton('Fermer', this.closeModal)}</View>
-                </View>
-            )
-        }
-        else {
-            return this.renderButton('Fermer', this.closeModal);
-        }
-    };
-
-    renderButton = (text, onPress, isDisable: false, color) => (
-        <Button
-            style = {styles.button}
-            color={color ? color : 'blue'}
-            onPress={onPress}
-            disabled={isDisable}
-            title={text} accessibilityLabel={text}
-        />
-    );
-
-    closeModal = () => {
-        this.setState({visibleModal: false});
+        return !!result || this.state.favoris.length >= 5;
     };
 
     enregistrerVille = () => {
@@ -151,7 +126,7 @@ export default class RechercheComponent extends Component {
                         let favoris = this.state.favoris;
                         favoris.push(favori);
                         this.setState({favoris: favoris});
-                    }).catch(e => {
+                    }).catch(() => {
                         ToastAndroid.show(`Une erreur s'est produite lors de l'insertion`, ToastAndroid.SHORT);
                     });
                 }
@@ -160,20 +135,6 @@ export default class RechercheComponent extends Component {
         else {
             ToastAndroid.show('La ville a déjà été ajouté aux favoris', ToastAndroid.SHORT);
         }
-    };
-
-    renderModalContent = () => {
-        return (
-            <View style={styles.modalContent}>
-
-                <Text style={styles.tempText}>{this.state.ville}</Text>
-                <Icon ios={'ios-sunny'} android={'md-sunny'} style={{fontSize: 48}}/>
-                <Text style={styles.subtitle}>{Utils.getRoundedTemperature(this.state.meteo.temperature)}</Text>
-                <Text style={styles.subtitle}>{this.state.meteo.description}</Text>
-
-                {this.renderButtons(false)}
-            </View>
-        );
     };
 
     renderSeparator = () => {
@@ -210,13 +171,13 @@ export default class RechercheComponent extends Component {
         if(isLoaded) {
             return (
                 <View style={{paddingTop: 0}}>
-                    {this.state.visibleModal && <Modal
-                        isVisible={this.state.visibleModal}
-                        animationType="slide"
-                        onBackButtonPress={this.closeModal}
-                        onRequestClose={this.closeModal}
-                        children={this.renderModalContent()}
-                    />}
+                    <ModalComponent
+                        visibleModal={this.state.visibleModal}
+                        visibilityHandler={this.switchVisibility}
+                        weather={this.state.weather}
+                        func={this.enregistrerVille}
+                        checker={this.isFavoriteOrMaxLength}
+                    />
                     <FlatList
                         data={this.state.data}
                         renderItem={({item}) => (
@@ -237,7 +198,11 @@ export default class RechercheComponent extends Component {
             )
         }
         else
-            return null;
+            return <SpinnerComponent/>;
+    };
+
+    switchVisibility = (visibility) => {
+        this.setState({visibleModal: visibility})
     };
 
     handleSearchPress = (item) => {
@@ -249,12 +214,14 @@ export default class RechercheComponent extends Component {
 
     componentWillMount() {
         BackHandler.addEventListener('hardwareBackPress', () => {});
-        this.closeModal();
     }
 
     componentWillUnmount() {
         BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
-        this.closeModal();
+    }
+
+    componentWillUpdate(props, states) {
+        this.state.visibleModal = states.visibleModal;
     }
 
     handleBackButtonClick() {
@@ -266,53 +233,3 @@ export default class RechercheComponent extends Component {
         }
     }
 }
-
-const styles = StyleSheet.create({
-    main: {
-        flexDirection: 'column',
-        justifyContent: 'center',
-        backgroundColor: '#2a8ab7'
-    },
-    title: {
-        marginBottom: 20,
-        fontSize: 25,
-        textAlign: 'center'
-    },
-    subtitle: {
-        fontSize: 18,
-        textAlign: 'center'
-    },
-    tempText: {
-        fontSize: 32,
-        color: '#000000'
-    },
-    searchInput: {
-        height: 50,
-        padding: 4,
-        marginRight: 5,
-        fontSize: 23,
-        borderWidth: 1,
-        borderColor: 'white',
-        borderRadius: 8,
-        color: 'white'
-    },
-    buttonText: {
-        fontSize: 18,
-        color: '#111',
-        alignSelf: 'center'
-    },
-    button: {
-        height: 45,
-        borderWidth: 1,
-        borderRadius: 8,
-        alignSelf: 'stretch'
-    },
-    modalContent: {
-        backgroundColor: 'white',
-        padding: 20,
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: 4,
-        borderColor: 'rgba(0, 0, 0, 0.1)',
-    }
-});

@@ -3,6 +3,7 @@ import {BackHandler, ListView, StyleSheet, ToastAndroid, View} from "react-nativ
 import {Constants, SQLite} from 'expo';
 import Favori from "../commons/model/favori";
 import { Button, Content, Icon, List, ListItem, Text } from 'native-base';
+import styles from "../commons/styles/styles";
 
 const db = SQLite.openDatabase('db.db');
 
@@ -76,16 +77,18 @@ export default class ParamsComponent extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                <View style={styles.viewRow}>
                     {this.renderListeFavoris()}
                 </View>
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingTop: 20 }}>
-                    <View style={{ flex: 2, paddingLeft: 10 }}>
-                        <Text style={{ fontSize: 20, fontWeight: '200' }}>Supprimer tous les favoris</Text>
-                    </View>
-                    <View style={{ flex: 1, paddingRight: 10 }}>
-                        {this.renderButton('Suppimer', this.deleteRows)}
-                    </View>
+                <View style={[styles.viewRow, { paddingTop: 20 }]}>
+                    <Content>
+                        <View style={styles.listViewText}>
+                            <Text style={styles.normalText}>Supprimer tous les favoris</Text>
+                        </View>
+                        <View style={styles.listViewDeleteButton}>
+                            {this.renderButton('Suppimer', this.deleteRows)}
+                        </View>
+                    </Content>
                 </View>
             </View>
         )
@@ -97,7 +100,7 @@ export default class ParamsComponent extends Component {
         if(favoris) {
             return (
                 <Content>
-                    <View><Text> Liste des favoris </Text></View>
+                    <View><Text style={styles.normalText}> Liste des favoris </Text></View>
                     <List
                         rightOpenValue={-75}
                         dataSource={ds.cloneWithRows(favoris)}
@@ -141,17 +144,3 @@ export default class ParamsComponent extends Component {
         }
     }
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 3,
-        alignItems: 'center',
-        paddingTop: Constants.statusBarHeight,
-        backgroundColor: '#fff',
-    },
-    button: {
-        borderWidth: 1,
-        borderRadius: 8,
-        alignSelf: 'stretch'
-    },
-});

@@ -5,6 +5,7 @@ import {createDrawerNavigator, createStackNavigator} from 'react-navigation';
 import RechercheComponent from "./app/recherche/search.component";
 import AccueilComponent from "./app/accueil/accueil.component";
 import ParamsComponent from "./app/params/params.component";
+import SpinnerComponent from "./app/commons/component/spinner/spinner.component";
 
 const db = Expo.SQLite.openDatabase('db.db');
 
@@ -111,7 +112,7 @@ export default class App extends Component {
                 <Container>
                     <Root/>
                 </Container>
-                : null
+                : <SpinnerComponent/>
         )
     }
 }
