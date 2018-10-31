@@ -76,17 +76,19 @@ export default class ParamsComponent extends Component {
 
     render() {
         return (
-            <View style={styles.container}>
+            <View style={[styles.container, {backgroundColor: '#fff'}]}>
                 <View style={styles.viewRow}>
                     {this.renderListeFavoris()}
                 </View>
                 <View style={[styles.viewRow, { paddingTop: 20 }]}>
                     <Content>
-                        <View style={styles.listViewText}>
-                            <Text style={styles.normalText}>Supprimer tous les favoris</Text>
-                        </View>
-                        <View style={styles.listViewDeleteButton}>
-                            {this.renderButton('Suppimer', this.deleteRows)}
+                        <View style={styles.viewRow}>
+                            <View style={styles.listViewText}>
+                                <Text style={[styles.normalText, styles.bold]}>Supprimer tous les favoris</Text>
+                            </View>
+                            <View style={styles.listViewDeleteButton}>
+                                {this.renderButton('Suppimer', this.deleteRows)}
+                            </View>
                         </View>
                     </Content>
                 </View>
@@ -100,12 +102,12 @@ export default class ParamsComponent extends Component {
         if(favoris) {
             return (
                 <Content>
-                    <View><Text style={styles.normalText}> Liste des favoris </Text></View>
+                    <View><Text style={[styles.normalText, styles.bold]}> Liste des favoris </Text></View>
                     <List
                         rightOpenValue={-75}
                         dataSource={ds.cloneWithRows(favoris)}
                         renderRow={data =>
-                            <ListItem>
+                            <ListItem onPress={() => {ToastAndroid.show('Swiper pour supprimer', ToastAndroid.SHORT)}}>
                                 <Text> {data.ville} ({data.pays}) </Text>
                             </ListItem>}
                         renderRightHiddenRow={(data, secId, rowId, rowMap) =>

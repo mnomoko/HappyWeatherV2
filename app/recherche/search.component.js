@@ -125,7 +125,9 @@ export default class RechercheComponent extends Component {
 
                         let favoris = this.state.favoris;
                         favoris.push(favori);
-                        this.setState({favoris: favoris});
+                        this.setState({favoris: favoris, visibleModal: false});
+                        ToastAndroid.show('La ville a bien été enregistrer', ToastAndroid.SHORT);
+
                     }).catch(() => {
                         ToastAndroid.show(`Une erreur s'est produite lors de l'insertion`, ToastAndroid.SHORT);
                     });

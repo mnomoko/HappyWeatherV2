@@ -68,8 +68,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 3,
         alignItems: 'center',
-        paddingTop: Constants.statusBarHeight,
-        backgroundColor: '#fff',
+        paddingTop: Constants.statusBarHeight
     },
     button: {
         borderWidth: 1,
@@ -87,6 +86,14 @@ const styles = StyleSheet.create({
     listViewDeleteButton: {
         flex: 1,
         paddingRight: 10
+    },
+    horizontal: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        padding: 10
+    },
+    bold: {
+        fontWeight: 'bold'
     }
 });
 

@@ -37,6 +37,7 @@ export default class AccueilComponent extends Component  {
                     <ModalComponent
                         visibleModal={this.state.visibleModal}
                         weather={this.state.weather}
+                        visibilityHandler={this.switchVisibility}
                     />
                     {this.renderTabs()}
                     <View>
@@ -133,6 +134,10 @@ export default class AccueilComponent extends Component  {
                 ToastAndroid.show('Problème lors de la récupération de votre emplacement')
             });
         }
+    };
+
+    switchVisibility = (visibility) => {
+        this.setState({visibleModal: visibility})
     };
 
     componentWillMount() {
