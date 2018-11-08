@@ -6,17 +6,48 @@
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "eject": "expo eject"
+    "eject": "expo eject",
+    "test": "jest --no-cache"
   },
   "dependencies": {
-    "expo": "^30.0.1",
+    "expo": "^31.0.2",
     "moment": "^2.22.2",
     "native-base": "^2.8.1",
-    "react": "16.3.1",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-30.0.0.tar.gz",
-    "react-native-sqlite-storage": "^3.3.6",
+    "react": "16.5.0",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-31.0.0.tar.gz",
     "react-native-elements": "^0.19.1",
     "react-native-modal": "6.5.0",
     "react-navigation": "^2.18.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.1.5",
+    "@babel/plugin-proposal-class-properties": "^7.1.0",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-loader": "^8.0.4",
+    "enzyme": "^3.7.0",
+    "enzyme-adapter-react-16": "^1.6.0",
+    "jest": "^23.6.0",
+    "jest-expo": "^31.0.0",
+    "react-dom": "^16.6.0",
+    "react-test-renderer": "^16.6.0",
+    "whatwg-fetch": "2.0.4"
+  },
+  "jest": {
+    "preset": "jest-expo",
+    "transform": {
+      "^.+\\.(js|jsx)?$": "./node_modules/react-native/jest/preprocessor.js"
+    },
+    "setupTestFrameworkScriptFile": "./app/__MOCKS__/jestSetup.js",
+    "transformIgnorePatterns": [
+      "node_modules/(?!react-navigation|expo|expo(nent)?|expo(nent)?/.*)/"
+    ],
+    "moduleFileExtensions": [
+      "js",
+      "jsx"
+    ],
+    "moduleDirectories": [
+      "node_modules",
+      "app"
+    ]
   }
 }

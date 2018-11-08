@@ -1,4 +1,4 @@
-import Expo from "expo";
+import { SQLite, Font } from "expo";
 import React, { Component } from 'react';
 import { Container, Icon } from "native-base";
 import {createDrawerNavigator, createStackNavigator} from 'react-navigation';
@@ -7,20 +7,20 @@ import AccueilComponent from "./app/accueil/accueil.component";
 import ParamsComponent from "./app/params/params.component";
 import SpinnerComponent from "./app/commons/component/spinner/spinner.component";
 
-const db = Expo.SQLite.openDatabase('db.db');
+const db = SQLite.openDatabase('db.db');
 
-getNavigationOptions = (title) => {
-    return {
-        title: title,
-        headerStyle: {
-            backgroundColor: '#f4511e',
-        },
-        headerTintColor: '#fff',
-        headerTitleStyle: {
-            fontWeight: 'bold',
-        },
-    }
-};
+// getNavigationOptions = (title) => {
+//     return {
+//         title: title,
+//         headerStyle: {
+//             backgroundColor: '#f4511e',
+//         },
+//         headerTintColor: '#fff',
+//         headerTitleStyle: {
+//             fontWeight: 'bold',
+//         },
+//     }
+// };
 
 const TITLE = 'Happy Weather V2';
 
@@ -86,7 +86,7 @@ export default class App extends Component {
     }
 
     async componentWillMount() {
-        await Expo.Font.loadAsync({
+        await Font.loadAsync({
             MaterialIcons: require("native-base/Fonts/MaterialIcons.ttf"),
             Roboto: require("native-base/Fonts/Roboto.ttf"),
             Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf"),

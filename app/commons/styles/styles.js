@@ -67,8 +67,7 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 3,
-        alignItems: 'center',
-        paddingTop: Constants.statusBarHeight
+        alignItems: 'center'
     },
     button: {
         borderWidth: 1,

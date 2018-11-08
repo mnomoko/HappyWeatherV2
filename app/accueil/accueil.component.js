@@ -87,9 +87,9 @@ export default class AccueilComponent extends Component  {
     select = async () => {
         const { navigate } = this.props.navigation;
         await this.executeSql('select * from favori', []).then(result => {
-            let favoris :Favori[] = [];
+            let favoris = [];
             for(let t of result) {
-                let favori: Favori = new Favori();
+                let favori = new Favori();
                 favori.id = t['id'];
                 favori.ville = t['ville'];
                 favori.pays = t['pays'];
