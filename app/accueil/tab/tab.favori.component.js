@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Utils from "../../commons/utils/Utils";
-import {FlatList, StyleSheet, Text, ToastAndroid, View} from "react-native";
+import { FlatList, StyleSheet, Text, ToastAndroid, View} from "react-native";
 import { ListItem } from "react-native-elements";
 import {Icon} from "native-base";
 import SpinnerComponent from "../../commons/component/spinner/spinner.component";
@@ -8,28 +8,21 @@ import MeteoBuilder from "../../commons/builder/meteo.builder";
 import MeteoService from "../../commons/service/meteo.service";
 import styles from "../../commons/styles/styles";
 
-let state = {
-    isReady: false,
-    favori: null,
-    first: null,
-    villes: [],
-    isReady: false,
-    isFetching: false
-};
-
 export default class TabFavori extends Component {
 
     constructor(props) {
         super(props);
 
-        state.favori = this.props.favori;
+        let state = {
+            isReady: false,
+            favori: this.props.favori,
+            first: null,
+            villes: [],
+            isFetching: false
+        };
         this.state = state;
 
-        let { first, villes } = this.state;
-
-        if(!!first || !!villes) {
-            this.getWeathers();
-        }
+        this.getWeathers();
     }
 
     render() {
@@ -112,7 +105,7 @@ export default class TabFavori extends Component {
     }
 
     componentWillUnmount() {
-        state = this.state;
+        // state = this.state;
     }
 
 }
